@@ -46,7 +46,7 @@
     font-size: 1.3rem;
     text-decoration:none;
     padding: 6px 5px;
-    width: 100%;
+    
     display: block;
     margin: 5px 0;
     border-radius: var(--border-radius);
@@ -68,7 +68,10 @@
   .btn-inline {
     display: inline;
   }
-  
+  .btn-inline-block {
+    display: inline-block;
+  }
+
   .btn-back {
     border-radius: var(--border-radius);
     color: var(--primary);
