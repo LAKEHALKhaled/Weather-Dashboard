@@ -12,7 +12,7 @@
   }
   
   body {
-    background-color: #A2DBFA;
+    background-color: whitesmoke ;
     margin: 0;
     padding: 0;
     font-family: "IBM Plex Sans", sans-serif;
@@ -22,14 +22,13 @@
   }
   
   h1,
-  h2,
   h3,
   h4,
   h5,
   h6 {
     font-weight: 700;
     margin: 0;
-    color: var(--dark);
+    color: white;
     line-height: 1.25;
   }
   
@@ -46,23 +45,24 @@
     font-size: 1.3rem;
     text-decoration:none;
     padding: 6px 5px;
-    
+    width: 100%;
     display: block;
-    margin: 5px 0;
-    border-radius: var(--border-radius);
+    margin: 5px;
+    
+    
     color: var(--primary);
     border: none;
     outline: none;
     background-color: #39A2DB;
-    box-shadow: 3px 3px var(--dark);
+    
     transform: translate(-1px, -1px);
   }
   
    .btn:hover {
-    color: var(--primary);
-    background-color: var(--tertiary);
+    color: #39A2DB;
+    background-color: #A2DBFA;
     transform: translate(0, 0);
-    box-shadow: 2px 2px var(--dark);
+    
   }
   
   .btn-inline {
@@ -78,7 +78,7 @@
     border: none;
     outline: none;
     background-color: var(--light-dark);
-    box-shadow: 3px 3px var(--secondary);
+    
     transform: translate(-1px, -1px);
     display: inline-block;
     width: auto;
@@ -92,7 +92,7 @@
     color: var(--primary);
     background-color: var(--tertiary);
     transform: translate(0, 0);
-    box-shadow: 2px 2px var(--dark);
+    
   }
   
   .hero {
@@ -154,7 +154,7 @@
   
   .card-header {
     color: var(--primary);
-    background-color: var(--dark);
+    background-color: #053742;
     padding: 2.5%;
     border-radius: calc(.18rem - 1px) calc(.18rem - 1px) 0 0;
   }
@@ -162,7 +162,23 @@
   .card-body {
     padding: 2.5%;
   }
-  
+  .back-border{
+    background-color: #053742 ;
+    border: #39A2DB;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .text-align{
+    text-align: center;
+    margin: 100px 0;
+  }
+  .padding{
+    padding-bottom: 10px;
+  }
   /* FORM */
   .form-label,
   .form-input,
@@ -174,7 +190,9 @@
     font-size: 1.1rem;
     margin: 0 0 0 5px;
   }
-  
+  .font-size{
+    font-size: 1.5rem;
+  }
   .form-input {
     width: 100%;
     padding: 3%;
