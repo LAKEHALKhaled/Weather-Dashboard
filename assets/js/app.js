@@ -202,13 +202,13 @@ function displayWeather(weather,container){
   if (uvi < 3) {
     weathers6.style.backgroundColor = "#5D8233";
   }
-  else if( 3 <= uvi < 6){
+  else if( uvi >=3  && uvi <6 ){
     weathers6.style.backgroundColor = "#E8E46E";
   }
-  else if( 6<= uvi <8){
+  else if( uvi >=6 && uvi <8){
     weathers6.style.backgroundColor = "#F3C583";
   }
-  else if( 8<= uvi <11){
+  else if( uvi >=8 && uvi <11){
     weathers6.style.backgroundColor = "#DF5E5E";
   }
   else{
