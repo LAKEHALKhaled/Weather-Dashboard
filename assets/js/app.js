@@ -10,20 +10,32 @@ var container4El = document.querySelector("#container4")
 var container5El = document.querySelector("#container5")
 var container6El = document.querySelector("#container6")
 
-var formSubmitHandler = function (event) {
-    event.preventDefault();
-    var cityname = nameInputEl.value.trim().toUpperCase();
+
+
+ function search (cityname) {
+    
     var cities = JSON.parse(localStorage.getItem("citiesList"))  || [] 
-    cities.push(cityname)
-    localStorage.setItem("citiesList", JSON.stringify(cities))
-   
+
+
+    //no existing cityname will be pushed twice to the cities array 
+    if(cities.includes(cityname)){
+      console.log("city already exist");
+     
+    } else{
+      cities.push(cityname)
+      localStorage.setItem("citiesList", JSON.stringify(cities))
+      addButton(cityname);
+    }
+    
+
+
+
+
+   //if it's an existing city name add it to the list otherwise alert enter a valid city name
     if (cityname) {
       getLatlon(cityname);
-      addButton(cityname);
       weatherCityEl.textContent = cityname
       
-      
-    
       weatherContainerEl.textContent = '';
       container1El.textContent = '';
       container2El.textContent = '';
@@ -33,10 +45,15 @@ var formSubmitHandler = function (event) {
       container6El.textContent = '';
       nameInputEl.value = '';
     } else {
-      alert('Please enter a GitHub username');
+      alert('Please enter a city name');
     }
   };
 
+
+
+
+
+  //use the city API to get the lattitude and longitude to use them for the on call API that provide all week weather and uvi.
   var getLatlon = function (city) {
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=1de90d827e463b75865e4df8ff41370b";
   
@@ -60,6 +77,9 @@ var formSubmitHandler = function (event) {
         alert('Unable to connect to GitHub');
       });
   };
+
+
+//using lattitude and longitude from previous API to get all data needed
   var getWeather = function (lat,lon) {
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+ lat +"&lon="+ lon +"&units=metric&exclude=hourly,minutely&appid=1de90d827e463b75865e4df8ff41370b";
     
@@ -71,13 +91,13 @@ var formSubmitHandler = function (event) {
             console.log(data.daily); 
             
              weatherWeek = data.daily;
-             displayWeather(weatherWeek[1],weatherContainerEl)
-             displayWeather(weatherWeek[2],container1El)
-             displayWeather(weatherWeek[3],container2El)
-             displayWeather(weatherWeek[4],container3El)
-             displayWeather(weatherWeek[5],container4El)
-             displayWeather(weatherWeek[6],container5El)
-             displayWeather(weatherWeek[7],container6El)
+             displayWeather(weatherWeek[0],weatherContainerEl)
+             displayWeather(weatherWeek[1],container1El)
+             displayWeather(weatherWeek[2],container2El)
+             displayWeather(weatherWeek[3],container3El)
+             displayWeather(weatherWeek[4],container4El)
+             displayWeather(weatherWeek[5],container5El)
+             displayWeather(weatherWeek[6],container6El)
              
             // displayRepos(data, city);
           });
@@ -89,11 +109,11 @@ var formSubmitHandler = function (event) {
         alert('Unable to connect to GitHub');
       });
   };
- 
+  
 
 
    
-    
+    //this functin is to convert the UNIX time to regular time
   function timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -106,27 +126,25 @@ var formSubmitHandler = function (event) {
   //adding a city to the city list 
 function addButton(cityname){
      
-           
+          
           var cities = JSON.parse(localStorage.getItem("citiesList"))
           console.log(cities);
-          for(i=0;i<cities.length;i++) {
-            console.log(cities[i]);
-            console.log(cityname);
-            if(cityname !== cities[i] || cityname !== ''){
+          console.log({cityname}); 
               var addCity = document.createElement("button")
-              cityEl.appendChild(addCity) 
-              addCity.textContent = cityname;
-              addCity.setAttribute("class", "btn btn-success btn-lg")
-            }
-            else{
-              addCity.textContent = '';
-            }
-          }
+                cityEl.appendChild(addCity) 
+                addCity.textContent = cityname;
+                addCity.setAttribute("class", "btn btn-lg")
+                addCity.addEventListener("click", function (event){
+                  cityname = event.target.textContent ; 
+                  search(cityname)
+                })
+                
+                
+            
           
-          
-          
+          }     
           // addCity.addEventListener("click", )
-}
+
 //display the weather on the screen
 function displayWeather(weather,container){
   weatherDay = weather
@@ -177,11 +195,40 @@ function displayWeather(weather,container){
   weathers5.textContent ="Humidity: " + humidity + "%";
   
   var weathers6 = document.createElement("h5")
-  weathers6.setAttribute("class","flex-row padding")
+  weathers6.setAttribute("class","flex-row margin")
   container.appendChild(weathers6)
   weathers6.textContent ="UV index: " + uvi;
+  console.log(typeof uvi);
+  if (uvi < 3) {
+    weathers6.style.backgroundColor = "#5D8233";
+  }
+  else if( 3 <= uvi < 6){
+    weathers6.style.backgroundColor = "#E8E46E";
+  }
+  else if( 6<= uvi <8){
+    weathers6.style.backgroundColor = "#F3C583";
+  }
+  else if( 8<= uvi <11){
+    weathers6.style.backgroundColor = "#DF5E5E";
+  }
+  else{
+    weathers6.style.backgroundColor = "#D62AD0";
+  }
 }
 
 
-  userFormEl.addEventListener('submit', formSubmitHandler);
-  
+  userFormEl.addEventListener('submit', function(event){
+    event.preventDefault();
+    var cityname = nameInputEl.value.trim().toUpperCase();
+    search(cityname)
+  });
+//   var cities = JSON.parse(localStorage.getItem("citiesList"))
+//  
+   
+ 
+//     console.log(event.target.textContent);
+//   })
+var cities = JSON.parse(localStorage.getItem("citiesList"))  || [] 
+for(i=0;i<cities.length;i++){
+  addButton(cities[i])
+}
